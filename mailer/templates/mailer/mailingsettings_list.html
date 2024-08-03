@@ -1,4 +1,4 @@
-{% extends 'main/index.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
     <div class="mt-auto mb-3 mx-3">
@@ -27,13 +27,13 @@
                     </div>
                     <div class="card-footer">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <a href="{% url 'mailer:settings_detail' object.pk %}" class="btn btn-lg btn-block btn-outline-warning">
+                            <a href="{% url 'mailer:settings_detail' object.pk %}" class="btn btn-xs btn-block btn-outline-primary">
                                 Смотреть
                             </a>
-                            <a href="{% url 'mailer:settings_update' object.pk %}" class="btn btn-lg btn-block btn-outline-warning">
+                            <a href="{% url 'mailer:settings_update' object.pk %}" class="btn btn-xs btn-block btn-outline-primary">
                                 Изменить
                             </a>
-                            <a href="{% url 'mailer:settings_delete' object.pk %}" class="btn btn-lg btn-block btn-outline-danger">
+                            <a href="{% url 'mailer:settings_delete' object.pk %}" class="btn btn-xs btn-block btn-outline-danger">
                                 Удалить
                             </a>
                         </div>
@@ -42,7 +42,7 @@
             </div>
         {% endfor %}
     </div>
-
+    {% load custom_tags %}
     {% pag_nav paginator page_obj %}
 
 {% endblock %}

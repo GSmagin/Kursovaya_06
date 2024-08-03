@@ -118,6 +118,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# APScheduler configuration
+SCHEDULER_CONFIG = {
+    'apscheduler.jobstores.default': {
+        'type': 'django_apscheduler.jobstores:DjangoJobStore'
+    },
+    'apscheduler.executors.default': {
+        'class': 'apscheduler.executors.pool:ThreadPoolExecutor',
+        'max_workers': 20
+    },
+    'apscheduler.executors.processpool': {
+        'class': 'apscheduler.executors.pool:ProcessPoolExecutor',
+        'max_workers': 5
+    },
+    'apscheduler.job_defaults.coalesce': False,
+    'apscheduler.job_defaults.max_instances': 1,
+    'apscheduler.timezone': 'UTC',
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -175,3 +193,25 @@ PASSWORD_RESET_TIMEOUT = env.int('PASSWORD_RESET_TIMEOUT')
 # ]
 
 CACHE_TIMEOUT: int = 60 * 5
+
+CACHE_ENABLED = env.bool('CACHES_ENABLED', False)
+if CACHE_ENABLED:
+    CACHE_MIDDLEWARE_SECONDS = int(os.getenv('CACHE_MIDDLEWARE_SECONDS'))
+    CACHE_MIDDLEWARE_KEY_PREFIX = os.getenv('CACHE_MIDDLEWARE_KEY_PREFIX')
+    CACHES = {
+        'default': {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": os.getenv('REDIS_LOCATION'),
+            # "TIMEOUT": 30 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+
+
+
+

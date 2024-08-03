@@ -1,0 +1,117 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Django-sky {{ title }} </title>
+    <link href="{% static 'ico/candygold.ico' %}" rel="icon" type="image/x-icon">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px; /* Adjust based on the height of your navbar */
+        }
+    </style>
+</head>
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-1 px-md-2 mb-1 bg-white border-bottom box-shadow fixed-top">
+    <h4 class="my-0 mr-md-auto font-weight-normal">Django-sky</h4>
+    <nav class="ms-2">
+        <a class="p-2 btn btn-outline-primary" href="">Главная</a>
+
+        {% if user.is_authenticated %}
+            <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">Статьи</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'blog:blogpost_list' %}">Все посты</a>
+                <a class="dropdown-item" href="{% url 'blog:blogpost_create' %}">Добавить пост</a>
+            </ul>
+
+            <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">Рассылки</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'client:client_list' %}">Страница клиентов</a>
+                <a class="dropdown-item" href="{% url 'client:client_create' %}">Добавить клиента</a>
+                <a class="dropdown-item" href="{% url 'mailer:message_list' %}">Страница рассылок</a>
+                <a class="dropdown-item" href="{% url 'mailer:message_create' %}">Добавить рассылку</a>
+                <a class="dropdown-item" href="{% url 'mailer:settings_list' %}">Страница сообщений</a>
+                <a class="dropdown-item" href="{% url 'mailer:settings_create' %}">Добавить сообщение</a>
+            </ul>
+
+        {% else %}
+            <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">Статьи</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="{% url 'blog:blogpost_list' %}">Все посты</a>
+            </ul>
+
+            <a class="p-2 btn btn-secondary" href="">Рассылки</a>
+        {% endif %}
+
+    </nav>
+
+    <nav class="px-md-2 ms-auto navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+            <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">{{ user.email }}</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'users:logout' %}">Выход</a>
+            <a class="dropdown-item" href="{% url 'users:profile_update' %}">Профиль</a>
+        {% else %}
+            <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
+               data-bs-toggle="dropdown"
+               aria-expanded="false">Login</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{% url 'users:login' %}">Вход</a>
+            <a class="dropdown-item" href="{% url 'users:register' %}">Регистрация</a>
+        {% endif %}
+        </ul>
+    </nav>
+</div>
+
+<div class="pricing-header col-6 px-1 py-1 pt-md-2 pb-md-2 mx-auto text-center">
+    <h1 class="display-5">{{ title }}</h1>
+    <p class="lead">{{ description }}</p>
+</div>
+
+<div class="container">
+    {% block content %}
+    {% endblock %}
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                Django-sky
+                <small class="d-block mb-3 text-muted">&copy; 2023</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Категории</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="">Магазин</a></li>
+                    <li><a class="text-muted" href="">Блог</a></li>
+                    <li><a class="text-muted" href="">Рассылка</a></li>
+
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Мы пишем</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>О нас</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.js' %}" crossorigin="anonymous"></script>
+</body>
+</html>

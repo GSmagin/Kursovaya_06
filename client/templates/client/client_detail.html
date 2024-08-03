@@ -1,4 +1,4 @@
-{% extends 'main/index.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 
@@ -14,7 +14,7 @@
                     <div class="card-body">
                         {{ object.comment }}
                     </div>
-                    <a type="submit" class="btn btn-lg btn-block btn-outline-warning" href="javascript:history.go(-1)">Назад</a>
+                    <a type="submit" class="btn btn-xs btn-block btn-outline-primary" href="javascript:history.go(-1)">Назад</a>
                 </div>
             </div>
         </div>

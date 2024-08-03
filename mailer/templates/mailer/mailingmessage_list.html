@@ -1,4 +1,4 @@
-{% extends 'main/index.html' %}
+{% extends 'main/base.html' %}
 
 {% block content %}
 
@@ -25,13 +25,13 @@
                 <td>{{ message.message|truncatechars:30 }}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                        <a href="{% url 'mailer:message_detail' message.pk %}" class="btn btn-outline-warning">
+                        <a href="{% url 'mailer:message_detail' message.pk %}" class="btn btn-xs btn-block btn-outline-primary">
                             Смотреть
                         </a>
-                        <a href="{% url 'mailer:message_update' message.pk %}" class="btn btn-outline-warning">
+                        <a href="{% url 'mailer:message_update' message.pk %}" class="btn btn-xs btn-block btn-outline-primary">
                             Изменить
                         </a>
-                        <a href="{% url 'mailer:message_delete' message.pk %}" class="btn btn-outline-danger">
+                        <a href="{% url 'mailer:message_delete' message.pk %}" class="btn btn-xs btn-outline-danger">
                             Удалить
                         </a>
                     </div>

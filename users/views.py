@@ -116,4 +116,4 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 class UserLogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('main:main')
+        return redirect('mailer:home')

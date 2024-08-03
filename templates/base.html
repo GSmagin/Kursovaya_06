@@ -17,15 +17,15 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-1 px-md-2 mb-1 bg-white border-bottom box-shadow fixed-top">
     <h4 class="my-0 mr-md-auto font-weight-normal">Django-sky</h4>
     <nav class="ms-2">
-        <a class="p-2 btn btn-outline-primary" href="{% url 'main:main' %}">Главная</a>
+        <a class="p-2 btn btn-outline-primary" href="">Главная</a>
 
         {% if user.is_authenticated %}
             <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
                data-bs-toggle="dropdown"
                aria-expanded="false">Статьи</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="">Все посты</a>
-                <a class="dropdown-item" href="">Добавить пост</a>
+                <a class="dropdown-item" href="{% url 'blog:blogpost_list' %}">Все посты</a>
+                <a class="dropdown-item" href="{% url 'blog:blogpost_create' %}">Добавить пост</a>
             </ul>
 
             <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"
@@ -45,7 +45,7 @@
                data-bs-toggle="dropdown"
                aria-expanded="false">Статьи</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="">Все посты</a>
+                <a class="dropdown-item" href="{% url 'blog:blogpost_list' %}">Все посты</a>
             </ul>
 
             <a class="p-2 btn btn-secondary" href="">Рассылки</a>
@@ -105,7 +105,7 @@
             <div class="col-6 col-md">
                 <h5>О нас</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="{% url 'main:contacts' %}">Контакты</a></li>
+                    <li><a class="text-muted" href="">Контакты</a></li>
                 </ul>
             </div>
         </div>

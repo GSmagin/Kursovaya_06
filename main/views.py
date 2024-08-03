@@ -9,7 +9,7 @@ def index(request):
         'title': page_title,
         'description': page_description,
     }
-    return render(request, 'main/index.html', context)
+    return render(request, 'main/base.html', context)
 
 
 def contacts(request):

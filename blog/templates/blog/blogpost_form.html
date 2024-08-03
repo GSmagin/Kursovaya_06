@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    <div class="container my-5">
+        <h1>{% if object %}
+            Редактировать пост
+        {% else %}
+            Создать пост
+        {% endif %}</h1>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            {% if not object %}
+                                <button type="submit" class="btn btn-xs btn-block btn-outline-primary">Создать</button>
+                                <a href="{% url 'blog:blogpost_list' %}"
+                                   class="btn btn-xs btn-block btn-outline-primary">Назад</a>
+                            {% else %}
+                                <button type="submit" class="btn btn-xs btn-block btn-outline-primary">Сохранить</button>
+                                <a href="{% url 'blog:blogpost_list' %}"
+                                   class="btn btn-xs btn-block btn-outline-primary">Назад</a>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
