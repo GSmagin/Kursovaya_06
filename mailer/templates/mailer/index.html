@@ -1,0 +1,105 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row row-cols-1 g-3">
+                <div class="col">
+                    <div class="card p-0">
+                        <div class="card-header">
+                            <b>Статистика рассылок сайта</b>
+                        </div>
+                        <div class="card-body">
+                            <p>Количество рассылок всего: {{ total_count }}</p>
+                            <p>Количество активных рассылок: {{ total_active }}</p>
+                            <p>Количество уникальных клиентов для рассылок: {{ total_client }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card p-0">
+                        <div class="card-header">
+                            <b>Как пользоваться сервисом</b>
+                        </div>
+                        <div class="card-body">
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item">
+                                    <a href="{% url 'client:client_create' %}" class="link-warning">Добавить клиента</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{% url 'mailer:message_create' %}" class="link-warning">Создать письмо</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{% url 'mailer:settings_create' %}" class="link-warning">Создать рассылку
+                                    </a>(назначить дату, выбрать клиентов и письма)
+                                </li>
+                                <li class="list-group-item">
+                                    Время рассылки писем начинается по UTC +7 (каждый день в час ночи)
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card h-100 p-0">
+                        <div class="card-body">
+                            <a type="button" class="btn btn-lg btn-block btn-outline-warning container"
+                               href="{% url 'mailer:settings_list' %}">
+                                Перейти в рассылки
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row row-cols-1 g-3">
+                {% for post in random_post %}
+                    <div class="col">
+                        <div class="card mx-2 p-0">
+                            <div class="card-header">
+                                <b>{{ post.title }}</b>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    {{ post.content|truncatewords:50 }}
+                                </p>
+                            </div>
+
+                            <div class="card-footer">
+                                <div class="row">
+                                    <div class="col-9">
+                                        <small class="text-body-secondary">Обновлено: {{ post.time_update|date:'d-m-Y H:i:s' }}</small><br>
+                                        <small class="text-body-secondary">Кол-во просмотров: {{ post.view_count }}</small><br>
+                                        <small class="text-body-secondary">Автор: {{ post.author|get_name_or_email }}</small><br>
+                                        <div class="mt-auto mb-3 mx-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <a href="{{ post.get_absolute_url }}"
+                                           class="btn btn-lg btn-block btn-outline-warning">Читать</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="col">
+                    <div class="card h-100 mx-2 p-0">
+                        <div class="card-body">
+                            <a type="button" class="btn btn-lg btn-block btn-outline-warning container" href="{% url 'blog:post_list' %}">
+                                Читать статьи
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

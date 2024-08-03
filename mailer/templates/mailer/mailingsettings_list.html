@@ -1,0 +1,48 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+    <div class="mt-auto mb-3 mx-3">
+<!--        <a href="{% url 'mailer:settings_create' %}" class="btn btn-lg btn-block btn-outline-primary">
+            Создать
+        </a> -->
+    </div>
+    <div class="row row-cols-1 row-cols-md-1 g-3">
+        {% for object in object_list %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">Рассылка: <b>{{ object }}</b></div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                Время: с <b>{{ object.time_start|date:'d.m.Y' }}</b> по <b>{{ object.time_end|date:'d.m.Y' }}</b>
+                            </li>
+                            <li class="list-group-item">Периодичность: <b>{{ object.get_frequency }}</b></li>
+                            <li class="list-group-item">Статус: <b>{{ object.get_status }}</b></li>
+                            <li class="list-group-item">Кол-во получателей: <b>{{ object.clients.count }}</b></li>
+                            <li class="list-group-item">
+                                <p>Тема письма: <b>{{ object.mail.title }}</b></p>
+                                <p>Содержимое письма: <b>{{ object.mail.message|truncatechars:50 }}</b></p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <a href="{% url 'mailer:settings_detail' object.pk %}" class="btn btn-lg btn-block btn-outline-warning">
+                                Смотреть
+                            </a>
+                            <a href="{% url 'mailer:settings_update' object.pk %}" class="btn btn-lg btn-block btn-outline-warning">
+                                Изменить
+                            </a>
+                            <a href="{% url 'mailer:settings_delete' object.pk %}" class="btn btn-lg btn-block btn-outline-danger">
+                                Удалить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% pag_nav paginator page_obj %}
+
+{% endblock %}

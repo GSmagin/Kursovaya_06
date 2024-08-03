@@ -21,11 +21,9 @@
         {% endif %}
 
         <h1 class="display-1 fw-bold">404</h1>
-        <p class="fs-3"><span class="text-danger">Opps!</span> Page not found.</p>
-        <p class="lead">
-            The page you’re looking for doesn’t exist.
-        </p>
-        <a href="{% url 'main:main' %}" class="btn btn-primary">Go Home</a>
+        <p class="fs-3"><span class="text-danger">Упс! </span> Страница не найдена.</p>
+        <p class="lead">Страница, которую вы ищете, не существует.</p>
+        <a type="submit" class="btn btn-lg btn-block btn-outline-primary" href="javascript:history.go(-1)">Назад</a>
     </div>
 </div>
 </body>
