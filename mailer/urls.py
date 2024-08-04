@@ -1,4 +1,6 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
+from django.views.generic import RedirectView
 
 from mailer import apps, views
 

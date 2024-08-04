@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from utils.const import NULLABLE
+from django.urls import reverse
 
 
 class BlogMod(models.Model):
@@ -21,6 +22,9 @@ class BlogMod(models.Model):
             ('can_publish_post', 'Могу опубликовать пост'),
             ('can_edit_post', 'Могу редактировать пост'),
         ]
+
+    def get_absolute_url(self):
+        return reverse('blog:blogpost_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.title

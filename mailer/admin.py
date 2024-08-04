@@ -4,6 +4,12 @@ from django.utils.safestring import mark_safe
 
 from mailer.models import MailingSettings, MailingMessage, MailingLogger
 
+#
+# admin.site.register(MailingSettings)
+# admin.site.register(MailingMessage)
+# # admin.site.register(Message)
+# admin.site.register(MailingLogger)
+
 
 @admin.register(MailingSettings)
 class MailingSettingsAdmin(admin.ModelAdmin):

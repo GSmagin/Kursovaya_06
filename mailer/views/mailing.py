@@ -1,5 +1,4 @@
 from django.views.generic import TemplateView
-
 from blog.models import BlogMod
 from mailer.models import MailingSettings
 from mailer.utils import MenuMixin

@@ -17,7 +17,7 @@
 <div class="d-flex flex-column flex-md-row align-items-center p-1 px-md-2 mb-1 bg-white border-bottom box-shadow fixed-top">
     <h4 class="my-0 mr-md-auto font-weight-normal">Django-sky</h4>
     <nav class="ms-2">
-        <a class="p-2 btn btn-outline-primary" href="">Главная</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailer:home' %}">Главная</a>
 
         {% if user.is_authenticated %}
             <a class="p-2 btn btn-outline-primary" href="#" role="button" id="dropdownMenuLink"

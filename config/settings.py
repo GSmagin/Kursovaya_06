@@ -30,12 +30,15 @@ SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
+DEBUG_EMAIL = env.bool('DEBUG_EMAIL', False)
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,11 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'main.apps.MainConfig',
     'blog.apps.BlogConfig',
     'client.apps.ClientConfig',
     'mailer.apps.MailerConfig',
     'users.apps.UsersConfig',
+
+    'django_extensions',
+    'debug_toolbar',
+    'django_apscheduler',
+
 ]
 
 MIDDLEWARE = [
@@ -58,6 +67,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -184,8 +198,8 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 
 
 AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'mailer/'
+LOGOUT_REDIRECT_URL = 'mailer/'
 PASSWORD_RESET_TIMEOUT = env.int('PASSWORD_RESET_TIMEOUT')
 
 # CRONJOBS = [
@@ -196,22 +210,86 @@ CACHE_TIMEOUT: int = 60 * 5
 
 CACHE_ENABLED = env.bool('CACHES_ENABLED', False)
 if CACHE_ENABLED:
-    CACHE_MIDDLEWARE_SECONDS = int(os.getenv('CACHE_MIDDLEWARE_SECONDS'))
-    CACHE_MIDDLEWARE_KEY_PREFIX = os.getenv('CACHE_MIDDLEWARE_KEY_PREFIX')
     CACHES = {
         'default': {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": os.getenv('REDIS_LOCATION'),
-            # "TIMEOUT": 30 # Ручная регулировка времени жизни кеша в секундах, по умолчанию 300
-        }
-    }
-else:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
         }
     }
 
+CACHE_MIDDLEWARE_SECONDS = int(os.getenv('CACHE_MIDDLEWARE_SECONDS'))
+CACHE_MIDDLEWARE_KEY_PREFIX = os.getenv('CACHE_MIDDLEWARE_KEY_PREFIX')
+
+# настройки логирования
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/debug.log',
+            'formatter': 'verbose',
+        },
+        'file_apscheduler': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs/apscheduler_log.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': True,
+            'formatter': 'verbose',
+        },
+        'apscheduler': {
+            'handlers': ['file_apscheduler'],
+            'level': 'DEBUG',
+            'propagate': True,
+            'formatter': 'verbose',
+        },
+    },
+}
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#         'level': 'DEBUG',
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
 
 
 

@@ -25,13 +25,13 @@
                         <div class="card-body">
                             <ol class="list-group list-group-numbered">
                                 <li class="list-group-item">
-                                    <a href="{% url 'client:client_create' %}" class="link-warning">Добавить клиента</a>
+                                    <a href="{% url 'client:client_create' %}" class="link-primary">Добавить клиента</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{% url 'mailer:message_create' %}" class="link-warning">Создать письмо</a>
+                                    <a href="{% url 'mailer:message_create' %}" class="link-primary">Создать письмо</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="{% url 'mailer:settings_create' %}" class="link-warning">Создать рассылку
+                                    <a href="{% url 'mailer:settings_create' %}" class="link-primary">Создать рассылку
                                     </a>(назначить дату, выбрать клиентов и письма)
                                 </li>
                                 <li class="list-group-item">
@@ -45,7 +45,7 @@
                 <div class="col">
                     <div class="card h-100 p-0">
                         <div class="card-body">
-                            <a type="button" class="btn btn-lg btn-block btn-outline-warning container"
+                            <a type="button" class="btn btn-lg btn-block btn-outline-primary container"
                                href="{% url 'mailer:settings_list' %}">
                                 Перейти в рассылки
                             </a>
@@ -72,15 +72,15 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-9">
-                                        <small class="text-body-secondary">Обновлено: {{ post.time_update|date:'d-m-Y H:i:s' }}</small><br>
-                                        <small class="text-body-secondary">Кол-во просмотров: {{ post.view_count }}</small><br>
+                                        <small class="text-body-secondary">Дата публикации.: {{ post.created_at|date:'d-m-Y H:i:s' }}</small><br>
+                                        <small class="text-body-secondary">Кол-во просмотров: {{ post.views_count }}</small><br>
                                         <small class="text-body-secondary">Автор: {{ post.author|get_name_or_email }}</small><br>
                                         <div class="mt-auto mb-3 mx-3">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <a href="{{ post.get_absolute_url }}"
-                                           class="btn btn-lg btn-block btn-outline-warning">Читать</a>
+                                           class="btn btn-lg btn-block btn-outline-primary">Читать</a>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                 <div class="col">
                     <div class="card h-100 mx-2 p-0">
                         <div class="card-body">
-                            <a type="button" class="btn btn-lg btn-block btn-outline-warning container" href="{% url 'blog:blogpost_list' %}">
+                            <a type="button" class="btn btn-lg btn-block btn-outline-primary container" href="{% url 'blog:blogpost_list' %}">
                                 Читать статьи
                             </a>
                         </div>

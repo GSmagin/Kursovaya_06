@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.core.management import BaseCommand
-from django.db.models import QuerySet
 
 
 class Command(BaseCommand):
@@ -28,62 +27,57 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # Создаем группы
-        user_input = input('Создать группы [Y/n]:\n').lower()
-        if user_input == 'y':
+        user_input = input('Создать группы [Y/n]:\n').strip().lower()
+        if user_input == 'y' or user_input == '':
             self.create_groups(self.my_groups)
-            print(f'Созданы группы: {", ".join(self.my_groups.keys())}')
+            self.stdout.write(self.style.SUCCESS(f'Созданы группы: {", ".join(self.my_groups.keys())}'))
 
         # Выбираем пользователя
-        while True:
+        user = None
+        while not user:
             try:
-                user_input = int(input('Введите pk пользователя:\n'))
+                user_input = int(input('Введите pk пользователя:\n').strip())
                 user = self.get_user(user_input)
-                if not user:
+                if user:
                     self.print_user(user)
-                    continue
+                else:
+                    self.stdout.write(self.style.ERROR('Пользователь не найден'))
             except ValueError:
-                print('Не корректный ввод, введите число')
-                continue
-            else:
-                self.print_user(user)
-                break
+                self.stdout.write(self.style.ERROR('Некорректный ввод, введите число'))
 
         # Выбираем группу
-        all_groups = Group.objects.all()
-        [print(i, v) for i, v in enumerate(all_groups)]
-        while True:
-            user_input = input('Выберите группу для пользователя:\n')
+        all_groups = list(Group.objects.all())
+        for i, group in enumerate(all_groups):
+            self.stdout.write(f'{i}: {group.name}')
+
+        group = None
+        while not group:
             try:
-                index = int(user_input)
-                group = self.get_group(all_groups, index)
-            except ValueError:
-                print('Не корректный ввод, введите число')
-                continue
-            except IndexError:
-                print('Выберите правильный индекс группы')
-                continue
-            else:
+                user_input = int(input('Выберите группу для пользователя:\n').strip())
+                group = self.get_group(all_groups, user_input)
                 group.user_set.add(user)
-                print(f'Пользователь {user} добавлен в группу {group}')
-                break
+                self.stdout.write(self.style.SUCCESS(f'Пользователь {user} добавлен в группу {group}'))
+            except ValueError:
+                self.stdout.write(self.style.ERROR('Некорректный ввод, введите число'))
+            except IndexError:
+                self.stdout.write(self.style.ERROR('Выберите правильный индекс группы'))
 
     @staticmethod
     def create_groups(groups: dict) -> None:
-        """ Создаем группы и привязываем разрешениям к ним """
-
+        """ Создаем группы и привязываем разрешения к ним """
         for group_name, permissions in groups.items():
             group, _ = Group.objects.get_or_create(name=group_name)
-            for permission in permissions:
-                content_type, codename = permission.split('.')
-                permission, _ = Permission.objects.get_or_create(codename=codename)
+            for perm in permissions:
+                app_label, codename = perm.split('.')
+                permission, created = Permission.objects.get_or_create(codename=codename, content_type__app_label=app_label)
+                if created:
+                    print(f'Создано разрешение: {codename}')
                 group.permissions.add(permission)
-
             group.save()
 
     @staticmethod
-    def get_user(user_id: int) -> QuerySet | None:
+    def get_user(user_id: int):
         """ Получаем пользователя по id """
-
         user_model = get_user_model()
         try:
             return user_model.objects.get(pk=user_id)
@@ -91,18 +85,13 @@ class Command(BaseCommand):
             return None
 
     @staticmethod
-    def print_user(user: QuerySet.first) -> None:
+    def print_user(user) -> None:
         """ Выводим информацию о пользователе """
-
-        if user is None:
-            print('Пользователь не найден')
-        else:
-            print(f'Пользователь выбран:\npk: {user.pk} email: {user.email} username: {user.username}')
+        print(f'Пользователь выбран:\npk: {user.pk} email: {user.email} username: {user.username}')
 
     @staticmethod
-    def get_group(groups: QuerySet, index: int) -> QuerySet | IndexError:
+    def get_group(groups, index: int):
         """ Получаем группу по индексу """
-
-        if index > len(groups) or index < 0:
-            raise IndexError('Не верный индекс группы')
+        if index >= len(groups) or index < 0:
+            raise IndexError('Неверный индекс группы')
         return groups[index]

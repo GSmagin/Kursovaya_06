@@ -1,8 +1,7 @@
 import logging
-
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
 from django.conf import settings
-
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 from django.core.management import call_command
@@ -82,6 +81,7 @@ class Command(BaseCommand):
             trigger=CronTrigger(
                 day_of_week='mon', hour='00', minute='00'
             ),  # Полночь понедельника, перед началом следующей рабочей недели.
+            # trigger=IntervalTrigger(seconds=5),
             id='delete_old_job_executions',
             max_instances=1,
             replace_existing=True,
@@ -114,3 +114,5 @@ class Command(BaseCommand):
         if background:
             return BackgroundScheduler(timezone=settings.TIME_ZONE)
         return BlockingScheduler(timezone=settings.TIME_ZONE)
+
+

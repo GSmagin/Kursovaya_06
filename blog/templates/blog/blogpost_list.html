@@ -15,7 +15,7 @@
                     {% if blog.is_published %}
                         <div class="col-md-2">
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-11">
                             <div class="row g-0 border rounded flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <!--                        <strong class="d-inline-block mb-2 text-success">Design</strong> -->
@@ -52,6 +52,5 @@
 {% endif %} -->
 
      <!-- Использование кастомного тега пагинации -->
-    {% load custom_tags %}
     {% pag_nav page_obj.paginator page_obj %}
 {% endblock %}

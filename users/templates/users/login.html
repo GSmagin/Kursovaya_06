@@ -22,8 +22,8 @@
                         <form method="post" action="" class="form-floating">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Войти</button>
-                            <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+                            <button type="submit" class="btn btn-xs btn-block btn-outline-primary">Войти</button>
+                            <a class="btn btn-xs btn-block btn-outline-primary" href="{% url 'users:password_reset' %}">Забыли пароль?</a>
                         </form>
                     </div>
                 </div>
