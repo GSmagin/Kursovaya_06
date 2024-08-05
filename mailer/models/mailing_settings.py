@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-
 from client.models import Client
 from utils.const import NULLABLE
 
@@ -19,11 +18,11 @@ class MailingSettings(models.Model):
         INACTIVE = 'inactive', 'неактивна'
 
     title = models.CharField(max_length=100, verbose_name='Название рассылки')
-    time_start = models.DateField(verbose_name='Время начала')
-    time_end = models.DateField(verbose_name='Время конца')
-    frequency = models.CharField(choices=FREQUENCY.choices, max_length=7, verbose_name='Периодичность')
+    time_start = models.DateField(verbose_name='Время начала рассылки')
+    time_end = models.DateField(verbose_name='Время окончания рассылки')
+    frequency = models.CharField(choices=FREQUENCY.choices, max_length=7, verbose_name='Периодичность рассылки')
     status = models.CharField(choices=STATUS.choices, max_length=8, verbose_name='Статус')
-    is_active = models.BooleanField(default=True, verbose_name='Активна')
+    is_active = models.BooleanField(default=True, verbose_name='Активация/Деактивация рассылки')
 
     mail = models.ForeignKey(
         to='MailingMessage',

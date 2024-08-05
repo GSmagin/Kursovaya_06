@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-
 from mailer.models import MailingSettings, MailingMessage, MailingLogger
 
 #

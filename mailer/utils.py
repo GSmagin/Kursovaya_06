@@ -9,7 +9,6 @@ from django.db.models import QuerySet
 from config import settings
 from mailer.models import MailingSettings, MailingLogger
 
-
 class MenuMixin:
     page_title: str = None
     page_description: str = None

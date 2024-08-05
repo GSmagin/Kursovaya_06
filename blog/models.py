@@ -18,10 +18,7 @@ class BlogMod(models.Model):
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
         ordering = ['-created_at']
-        permissions = [
-            ('can_publish_post', 'Могу опубликовать пост'),
-            ('can_edit_post', 'Могу редактировать пост'),
-        ]
+
 
     def get_absolute_url(self):
         return reverse('blog:blogpost_detail', kwargs={'pk': self.pk})

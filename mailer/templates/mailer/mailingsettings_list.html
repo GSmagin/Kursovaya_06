@@ -1,10 +1,9 @@
 {% extends 'main/base.html' %}
-
 {% block content %}
     <div class="mt-auto mb-3 mx-3">
-<!--        <a href="{% url 'mailer:settings_create' %}" class="btn btn-lg btn-block btn-outline-primary">
+        <a href="{% url 'mailer:settings_create' %}" class="btn btn-xs btn-block btn-outline-primary">
             Создать
-        </a> -->
+        </a> 
     </div>
     <div class="row row-cols-1 row-cols-md-1 g-3">
         {% for object in object_list %}

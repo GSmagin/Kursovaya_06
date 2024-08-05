@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from django.core.management import BaseCommand
-
 from mailer.models import MailingSettings
 from mailer.utils import check_day_dispatch, send_mail_custom
 
@@ -10,7 +8,6 @@ class Command(BaseCommand):
     help = 'Старт запуска рассылок'
 
     def handle(self, *args, **options):
-
         date_now = datetime.now().date()
 
         # переводим рассылки в активные

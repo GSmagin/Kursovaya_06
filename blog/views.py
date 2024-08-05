@@ -53,19 +53,13 @@ class BlogListView(ListView):
         # return BlogMod.objects.filter(is_published=True)
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = PostForm
     model = BlogMod
     template_name = 'blog/blogpost_form.html'
-    #fields = ["title", "content", "preview_image", "is_published"]
     success_url = reverse_lazy('blog:blogpost_list')
-
-    # def form_valid(self, form):
-    #     if form.is_valid():
-    #         new_post = form.save(commit=False)
-    #         new_post.slug = slugify(new_post.title)
-    #         new_post.save()
-    #     return super().form_valid(form)
+    page_title = 'Страница для создания статьи'
+    permission_required = 'can_publish_post'
 
     @method_decorator(never_cache)
     def dispatch(self, *args, **kwargs):
@@ -77,7 +71,6 @@ class BlogCreateView(CreateView):
         if self.model.objects.filter(slug=title).exists():
             form.add_error('title', 'Пост с таким slug уже существует')
             return self.form_invalid(form=form)
-
         form.instance.author = self.request.user
         return super().form_valid(form)
 

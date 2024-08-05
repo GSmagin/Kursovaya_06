@@ -7,7 +7,7 @@ from mailer import apps, views
 app_name = apps.MailerConfig.name
 
 urlpatterns = [
-    path('', views.IndexTemplateView.as_view(), name='home'),
+    path('',  cache_page(60)(views.IndexTemplateView.as_view()), name='home'),
 
     path('message/list', views.MessageListView.as_view(), name='message_list'),
     path('message/create', views.MessageCreateView.as_view(), name='message_create'),

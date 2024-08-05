@@ -1,6 +1,5 @@
 import logging
 from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.interval import IntervalTrigger
 from django.conf import settings
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
@@ -68,12 +67,12 @@ class Command(BaseCommand):
         logger.info('Added job "run_mailing".')
 
         # дебажная запись в логи для проверки работы
-        debag = False
-        if debag:
-            scheduler.add_job(
-                my_job, trigger=CronTrigger(second='*/10'), id='my_job', max_instances=1, replace_existing=True
-            )
-            logger.info('Added job "my_job".')
+        # debag = False
+        # if debag:
+        #     scheduler.add_job(
+        #         my_job, trigger=CronTrigger(second='*/10'), id='my_job', max_instances=1, replace_existing=True
+        #     )
+        #     logger.info('Added job "my_job".')
 
         # добавляем задание на удаление старых записей в таблице
         scheduler.add_job(
@@ -81,7 +80,6 @@ class Command(BaseCommand):
             trigger=CronTrigger(
                 day_of_week='mon', hour='00', minute='00'
             ),  # Полночь понедельника, перед началом следующей рабочей недели.
-            # trigger=IntervalTrigger(seconds=5),
             id='delete_old_job_executions',
             max_instances=1,
             replace_existing=True,

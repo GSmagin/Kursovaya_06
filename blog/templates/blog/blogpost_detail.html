@@ -10,10 +10,10 @@
     <p>Создано: {{ blog.created_at }}</p>
     <p>Просмотров: {{ blog.views_count }}</p>
     <p>Опубликовано: {% if blog.is_published %}Да{% else %}Нет{% endif %}</p>
-    {% if user.is_authenticated %}
+<!--    {% if user.is_authenticated %}
     <a href="{% url 'blog:blogpost_update' blog.pk %}" class="btn btn-xs btn-block btn-outline-primary">Редактировать</a>
     <a href="{% url 'blog:blogpost_delete' blog.pk %}" class="btn btn-xs btn-block btn-outline-primary">Удалить</a>
-    {% endif %}
+    {% endif %} -->
     <a href="{% url 'blog:blogpost_list' %}" class="btn btn-xs btn-block btn-outline-primary">Назад</a>
     </div>
   </div>

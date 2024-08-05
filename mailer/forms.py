@@ -37,6 +37,8 @@ class SettingsForm(forms.ModelForm):
         fields = ['title', 'time_start', 'time_end', 'frequency', 'status', 'mail', 'clients']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'time_start': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            # 'time_end': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'time_start': forms.SelectDateWidget(attrs={'class': 'form-control'}),
             'time_end': forms.SelectDateWidget(attrs={'class': 'form-control'}),
             'frequency': forms.Select(attrs={'class': 'form-control'}),
