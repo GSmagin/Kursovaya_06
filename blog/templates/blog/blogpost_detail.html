@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="p-4 p-md-5 mb-4 rounded bg-light">
+    <div class="col-md-12 px-0">
+      <h1 class="display-6 fst-italic">{{ blog.title }}</h1>
+        {% if blog.preview_image %}
+        <img src="{{ blog.preview_image.url }}" class="img-fluid mb-3 bd-placeholder-img" width="300" height="330" alt="{{ blog.title }}">
+    {% endif %}
+    <p>Текст: {{ blog.content }}</p>
+    <p>Создано: {{ blog.created_at }}</p>
+    <p>Просмотров: {{ blog.views_count }}</p>
+    <p>Опубликовано: {% if blog.is_published %}Да{% else %}Нет{% endif %}</p>
+<!--    {% if user.is_authenticated %}
+    <a href="{% url 'blog:blogpost_update' blog.pk %}" class="btn btn-xs btn-block btn-outline-primary">Редактировать</a>
+    <a href="{% url 'blog:blogpost_delete' blog.pk %}" class="btn btn-xs btn-block btn-outline-primary">Удалить</a>
+    {% endif %} -->
+    <a href="{% url 'blog:blogpost_list' %}" class="btn btn-xs btn-block btn-outline-primary">Назад</a>
+    </div>
+  </div>
+{% endblock %}

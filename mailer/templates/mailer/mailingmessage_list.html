@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% block content %}
+    
+    <div class="mt-auto mb-3 mx-3">
+        <a href="{% url 'mailer:message_create' %}" class="btn btn-xs btn-block btn-outline-primary">
+            Создать
+        </a>
+    </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Тема письма</th>
+            <th scope="col">Содержимое письма</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for message in object_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ message.title }}</td>
+                <td>{{ message.message|truncatechars:30 }}</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <a href="{% url 'mailer:message_detail' message.pk %}" class="btn btn-xs btn-block btn-outline-primary">
+                            Смотреть
+                        </a>
+                        <a href="{% url 'mailer:message_update' message.pk %}" class="btn btn-xs btn-block btn-outline-primary">
+                            Изменить
+                        </a>
+                        <a href="{% url 'mailer:message_delete' message.pk %}" class="btn btn-xs btn-outline-danger">
+                            Удалить
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% pag_nav paginator page_obj %}
+
+{% endblock %}

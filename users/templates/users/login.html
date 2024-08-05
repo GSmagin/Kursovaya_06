@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+    <div class="form-section container mt-3 justify-content-center d-flex">
+        <div class="col-lg-4 col-lg-12">
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-5 col-md-5 col-sm-10">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-4 font-weight-normal">Авторизация</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="" class="form-floating">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-xs btn-block btn-outline-primary">Войти</button>
+                            <a class="btn btn-xs btn-block btn-outline-primary" href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+    <!--    {% for field in form %}
+        <p class="form-label form-control ">{{ field.label }}</p>
+         <label class="form-label">{{ field }}</label>
+   {% endfor %}
+     </div>
+    <button type="submit" class="btn btn-outline-success">Войти</button>  
+</form>
+   </div>
+      </div> -->
